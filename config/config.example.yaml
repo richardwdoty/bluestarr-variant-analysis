@@ -2,6 +2,7 @@ paths:
   repo_root: "/path/to/bluestarr-variant-analysis"
   run_root: "/path/to/bluestarr_variant_analysis_runs"
   ref_root: "/path/to/reference_files"
+  raw_data: "raw_data"
 
 workflow:
   prediction_generation:
@@ -19,13 +20,30 @@ workflow:
     filtered_dir: "prediction_processing/filtered"
 
 prediction_generation:
+  # Input region file
   input_file: "regions_input.bed.gz"
+
+  # Whether the input file has column headers
+  has_header: false
+
+  # Column specification: either indices (0-based) or names
+  columns:
+    chrom: 0
+    start: 1
+    end: 2
+    tss_distance: 6
+    gene: null   # optional; set to index or column name if available
+
+  # Region filtering parameters
+  region_size: 1000000
+  min_size: 2
+  min_distance: 1
+
+  # Output filenames (written to workflow.prediction_generation.intermediate_dir)
   region_keys_file: "region_keys.txt"
   regions_all_file: "regions_all.txt"
   fasta_file: "regions.fasta"
 
-  min_size: 2
-  min_distance: 1
   chunk_size: 1000
   regions_per_call: 1
   batch_size: 901
@@ -58,8 +76,8 @@ prediction_processing:
 
       tss: true
       reference_file: "region_keys.txt"
-      tss_ref_key_col: "full_region"
-      tss_distance_col: "dist"
+      tss_ref_key_col: "source_region"
+      tss_distance_col: "tss_distance"
 
       label_region: false
       category_file: "region_categories.txt"
