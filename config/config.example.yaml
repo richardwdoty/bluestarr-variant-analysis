@@ -1,0 +1,98 @@
+paths:
+  repo_root: "/path/to/bluestarr-variant-analysis"
+  run_root: "/path/to/bluestarr_variant_analysis_runs"
+  ref_root: "/path/to/reference_files"
+
+workflow:
+  prediction_generation:
+    workers_dir: "workflow/workers"
+    chunks_dir: "prediction_generation/chunks"
+    intermediate_dir: "prediction_generation/intermediate"
+    preds_dir: "prediction_generation/preds"
+    slurm_dir: "workflow/slurm"
+
+  prediction_processing:
+    workers_dir: "workflow/workers"
+    combined_dir: "prediction_processing/combined"
+    annotated_dir: "prediction_processing/annotated"
+    condensed_dir: "prediction_processing/condensed"
+    filtered_dir: "prediction_processing/filtered"
+
+prediction_generation:
+  input_file: "regions_input.bed.gz"
+  region_keys_file: "region_keys.txt"
+  regions_all_file: "regions_all.txt"
+  fasta_file: "regions.fasta"
+
+  min_size: 2
+  min_distance: 1
+  chunk_size: 1000
+  regions_per_call: 1
+  batch_size: 901
+
+  model_dir: "/path/to/bluestarr_model"
+
+prediction_processing:
+  combine:
+    input_dir: "prediction_generation/preds"
+    output_filename_template: "predictions_chr{chr}.txt.gz"
+    input_format: "default"
+    load_full_file: true
+
+  parse:
+    input_dir: "prediction_processing/combined"
+    output_dir: "prediction_processing/annotated"
+    input_filename_template: "predictions_chr{chr}.txt.gz"
+    output_filename_template: "annotated_predictions_chr{chr}.txt.gz"
+    input_format: "default"
+    load_full_file: true
+
+    annotate:
+      gnomad: true
+      gnomad_vcf: "gnomad/gnomad.chr{chr}.filtered.vcf.gz"
+      gnomad_format: "exact"
+
+      conservation: false
+      conservation_bw_dir: "/path/to/conservation_scores"
+      conservation_bw_file: "hg38.phastCons100way.bw"
+
+      tss: true
+      reference_file: "region_keys.txt"
+      tss_ref_key_col: "full_region"
+      tss_distance_col: "dist"
+
+      label_region: false
+      category_file: "region_categories.txt"
+
+      gene: true
+      gene_col: "gene"
+
+    filter:
+      hv_only: false
+      min_tss_dist: 1
+      max_tss_dist: null
+      region_size: null
+      variant_types: null
+
+  condense:
+    input_dir: "prediction_processing/annotated"
+    output_dir: "prediction_processing/condensed"
+    condensed_template: "condensed_data_chr{chr}.txt.gz"
+    extra_output_fields: ["HV", "TSSdist", "gene"]
+
+  filter:
+    input_dir: "prediction_processing/condensed"
+    output_dir: "prediction_processing/filtered"
+    output_filename_template: "filtered_condensed_data_chr{chr}.txt.gz"
+
+slurm:
+  account: "your_account"
+  partition: "your_partition"
+  memory_mb: 15000
+  cpus_per_task: 1
+  use_gpu: true
+  mail_user: "your_email@example.com"
+
+tools:
+  twoBitToFa: "bin/twoBitToFa"
+  twobit_file: "/path/to/genome.2bit"
