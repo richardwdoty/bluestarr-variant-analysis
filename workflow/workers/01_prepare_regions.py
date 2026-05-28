@@ -57,7 +57,7 @@ def prepare_regions(config: dict):
 
     intermediate_dir = run_root / workflow_cfg["intermediate_dir"]
     output_keys = intermediate_dir / gen_cfg["region_keys_file"]
-    output_regions = intermediate_dir / gen_cfg["regions_all_file"]
+    output_regions = intermediate_dir / gen_cfg["prediction_regions_file"]
 
     has_header = gen_cfg["has_header"]
     column_spec = gen_cfg["columns"]

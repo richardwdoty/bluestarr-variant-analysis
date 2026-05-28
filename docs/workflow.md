@@ -144,7 +144,7 @@ chr1:10000-10200   chr1:9850-10349   MYC   5421
 ### File 2
 
 ```
-regions_all.txt
+prediction_regions.txt
 ```
 
 Contains:
@@ -177,16 +177,16 @@ prediction_generation
 
 Relevant fields:
 
-| Parameter        | Description                         |
-| ---------------- | ----------------------------------- |
-| input_file       | Region input file                   |
-| has_header       | Whether input contains column names |
-| columns          | Column role specification           |
-| region_size      | Target prediction window            |
-| min_size         | Minimum region size                 |
-| min_distance     | Minimum midpoint TSS distance       |
-| region_keys_file | Output metadata filename            |
-| regions_all_file | Output interval list filename       |
+| Parameter               | Description                         |
+| ----------------------- | ----------------------------------- |
+| input_file              | Region input file                   |
+| has_header              | Whether input contains column names |
+| columns                 | Column role specification           |
+| region_size             | Target prediction window            |
+| min_size                | Minimum region size                 |
+| min_distance            | Minimum midpoint TSS distance       |
+| region_keys_file        | Output metadata filename            |
+| prediction_regions_file | Output interval list filename       |
 
 ---
 
@@ -195,7 +195,7 @@ Relevant fields:
 Outputs are consumed by:
 
 ```
-02_split_regions.py
+02_chunk_regions.py
 ```
 
 which:

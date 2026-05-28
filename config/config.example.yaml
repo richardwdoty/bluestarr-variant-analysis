@@ -39,10 +39,13 @@ prediction_generation:
   min_size: 2
   min_distance: 1
 
-  # Output filenames (written to workflow.prediction_generation.intermediate_dir)
+  
   region_keys_file: "region_keys.txt"
-  regions_all_file: "regions_all.txt"
-  fasta_file: "regions.fasta"
+  prediction_regions_file: "prediction_regions.txt"
+  prediction_fasta_file: "prediction_regions.fasta"
+  
+  chunk_filename_template: "prediction_chunk_{chunk}.tsv"
+  chromosome_index_file: "chromosome_chunk_index.tsv"
 
   chunk_size: 1000
   regions_per_call: 1

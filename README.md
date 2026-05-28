@@ -45,7 +45,7 @@ Steps include:
 3. Generate systematic single-nucleotide perturbations
 4. Run BlueSTARR predictions for each allele at each position
 
-Predictions are produced as **log(RNA/DNA)** regulatory activity values.
+Predictions are produced as **log2(RNA/DNA)** regulatory activity values.
 
 Because each region is evaluated across multiple sequence windows and alleles, prediction generation is executed as a **large Slurm array job**.
 
