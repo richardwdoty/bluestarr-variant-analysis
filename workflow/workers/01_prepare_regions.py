@@ -7,7 +7,7 @@ Reads a region file, filters intervals by size and TSS distance, pads each
 interval for BlueSTARR windowing, and writes:
 
 1. region_keys_file (with metadata)
-2. regions_all_file (prediction_region only, no header)
+2. prediction_regions_file (prediction_region only, no header)
 """
 
 from __future__ import annotations

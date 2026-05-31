@@ -44,8 +44,11 @@ prediction_generation:
   prediction_regions_file: "prediction_regions.txt"
   prediction_fasta_file: "prediction_regions.fasta"
   
+  chromosome_index_file: "chromosome_index.txt"
   chunk_filename_template: "prediction_chunk_{chunk}.tsv"
-  chromosome_index_file: "chromosome_chunk_index.tsv"
+  allow_ambiguous_bases: false
+  
+  skip_non_acgt: true
 
   chunk_size: 1000
   regions_per_call: 1
@@ -116,4 +119,4 @@ slurm:
 
 tools:
   twoBitToFa: "bin/twoBitToFa"
-  twobit_file: "/path/to/genome.2bit"
+  twobit_file: "genome.2bit"

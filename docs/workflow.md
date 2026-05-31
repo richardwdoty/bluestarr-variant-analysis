@@ -190,18 +190,80 @@ Relevant fields:
 
 ---
 
+# Stage 02 — Region Chunking
+
+Script:
+
+```
+workflow/workers/02_chunk_regions.py
+```
+
+## Purpose
+
+Extract FASTA sequence for prepared prediction regions and split records into
+chunk files for BlueSTARR prediction jobs.
+
+---
+
+## Inputs
+
+Consumes:
+
+```
+prediction_regions.txt
+```
+
+from `workflow.prediction_generation.intermediate_dir`.
+
+The genome 2bit file is resolved from:
+
+```
+paths.ref_root / tools.twobit_file
+```
+
+The `twoBitToFa` executable is resolved from:
+
+```
+paths.repo_root / tools.twoBitToFa
+```
+
+---
+
+## Outputs
+
+Writes FASTA output to:
+
+```
+workflow.prediction_generation.intermediate_dir / prediction_generation.prediction_fasta_file
+```
+
+Writes chunk files and the chromosome index to:
+
+```
+workflow.prediction_generation.chunks_dir
+```
+
+Relevant output filenames are controlled by:
+
+| Parameter               | Description                  |
+| ----------------------- | ---------------------------- |
+| prediction_fasta_file   | Extracted FASTA filename     |
+| chunk_filename_template | Chunk output filename format |
+| chromosome_index_file   | Chromosome-to-chunk index    |
+| chunk_size              | Maximum records per chunk    |
+
+---
+
 ## Downstream dependencies
 
 Outputs are consumed by:
 
 ```
-02_chunk_regions.py
+future prediction runner scripts
 ```
 
 which:
 
-* retrieves genomic sequence
-* splits intervals into chunk files
 * prepares prediction jobs
 
 ---

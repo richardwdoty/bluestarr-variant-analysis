@@ -112,15 +112,21 @@ Additional utilities required by the workflow may be stored in the `bin/` direct
 
 ## Running the Workflow
 
-Typical workflow stages are executed through runner scripts located in:
+Implemented workflow stages currently live as numbered worker scripts in:
+
+```
+workflow/workers/
+```
+
+User-facing runner scripts will live in:
 
 ```
 workflow/runners/
 ```
 
-These scripts coordinate worker tasks and may generate or submit Slurm job arrays for large-scale computation.
+These future scripts will coordinate worker tasks and may generate or submit Slurm job arrays for large-scale computation.
 
-Detailed usage instructions will be provided in the `docs/` directory.
+Detailed usage instructions are maintained in `docs/workflow.md`.
 
 ---
 
